@@ -1,0 +1,16 @@
+<div class="min-h-screen flex flex-col bg-gray-50 font-sans">
+  <!-- Persistent Header -->
+  <app-header></app-header>
+
+  <!-- Main Content Layout -->
+  <main class="flex-grow flex flex-col w-full" id="main-content" role="main" tabindex="-1">
+    <router-outlet></router-outlet>
+  </main>
+  
+  <!-- Simple Footer Placeholder (Optional but good practice) -->
+  <footer class="bg-secondary text-white py-6 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+      <p>&copy; 2026 NEUROSIGNOS. Plataforma educativa interactiva.</p>
+    </div>
+  </footer>
+</div>

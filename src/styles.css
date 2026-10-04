@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #1A56DB;
+    --color-secondary: #0F2942;
+    --color-card: #FFFFFF;
+    --color-card-border: #E2E8F0;
+    --color-accent-pathology: #E53E3E;
+    --color-accent-normal: #3182CE;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-800 font-sans antialiased;
+  }
+}

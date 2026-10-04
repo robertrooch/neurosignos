@@ -1,0 +1,66 @@
+<header class="bg-white border-b border-card-border shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      
+      <!-- Logo & Subtitle -->
+      <div class="flex-shrink-0 flex items-center">
+        <a routerLink="/" class="flex flex-col">
+          <span class="text-2xl font-bold text-primary tracking-tight">NEUROSIGNOS</span>
+          <span class="text-xs text-gray-500 font-medium hidden sm:block">Aprende · Explora · Diagnostica</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-1 lg:space-x-4 items-center" aria-label="Main Navigation">
+        <a routerLink="/inicio" routerLinkActive="text-primary bg-blue-50" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" (click)="closeMobileMenu()">Inicio</a>
+        <a routerLink="/reflejos" routerLinkActive="text-primary bg-blue-50" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" (click)="closeMobileMenu()">Reflejos</a>
+        <a routerLink="/simulador" routerLinkActive="text-primary bg-blue-50" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" (click)="closeMobileMenu()">Simulador</a>
+        <a routerLink="/casos-clinicos" routerLinkActive="text-primary bg-blue-50" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" (click)="closeMobileMenu()">Casos clínicos</a>
+        <a routerLink="/evaluacion" routerLinkActive="text-primary bg-blue-50" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" (click)="closeMobileMenu()">Evaluación</a>
+        <a routerLink="/recursos" routerLinkActive="text-primary bg-blue-50" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" (click)="closeMobileMenu()">Recursos</a>
+      </nav>
+
+      <!-- Profile Icon (Desktop & Mobile) -->
+      <div class="hidden md:flex items-center">
+        <button type="button" routerLink="/perfil" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors" aria-label="Perfil de usuario">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="flex items-center md:hidden">
+        <button type="button" (click)="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" [attr.aria-expanded]="isMobileMenuOpen()">
+          <span class="sr-only">Abrir menú principal</span>
+          <!-- Icon when menu is closed -->
+          <svg *ngIf="!isMobileMenuOpen()" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <!-- Icon when menu is open -->
+          <svg *ngIf="isMobileMenuOpen()" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="isMobileMenuOpen()" class="md:hidden border-t border-gray-200" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a routerLink="/inicio" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50" (click)="closeMobileMenu()">Inicio</a>
+      <a routerLink="/reflejos" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50" (click)="closeMobileMenu()">Reflejos</a>
+      <a routerLink="/simulador" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50" (click)="closeMobileMenu()">Simulador</a>
+      <a routerLink="/casos-clinicos" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50" (click)="closeMobileMenu()">Casos clínicos</a>
+      <a routerLink="/evaluacion" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50" (click)="closeMobileMenu()">Evaluación</a>
+      <a routerLink="/recursos" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50" (click)="closeMobileMenu()">Recursos</a>
+      <a routerLink="/perfil" routerLinkActive="bg-blue-50 text-primary border-l-4 border-primary" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 flex items-center" (click)="closeMobileMenu()">
+        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        Mi Perfil
+      </a>
+    </div>
+  </div>
+</header>
