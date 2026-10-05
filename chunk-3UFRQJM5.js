@@ -1,0 +1,1 @@
+import{Ca as t,Ma as n,Na as s,Va as p}from"./chunk-Z3ZAURKJ.js";var a=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-reflejos"]],decls:2,vars:0,template:function(e,f){e&1&&(n(0,"h2"),p(1,"Reflejos Works"),s())},encapsulation:2})};export{a as ReflejosComponent};

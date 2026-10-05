@@ -1,0 +1,1 @@
+import{Ca as t,Ma as n,Na as a,Va as i}from"./chunk-Z3ZAURKJ.js";var m=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-simulador"]],decls:2,vars:0,template:function(e,r){e&1&&(n(0,"h2"),i(1,"Simulador Works"),a())},encapsulation:2})};export{m as SimuladorComponent};

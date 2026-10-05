@@ -1,0 +1,1 @@
+import{Ca as s,Ma as n,Na as t,Va as i}from"./chunk-Z3ZAURKJ.js";var c=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=s({type:o,selectors:[["app-casos-clinicos"]],decls:2,vars:0,template:function(e,p){e&1&&(n(0,"h2"),i(1,"Casos Cl\xEDnicos Works"),t())},encapsulation:2})};export{c as CasosClinicosComponent};

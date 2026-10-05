@@ -1,0 +1,1 @@
+import{Ca as t,Ma as a,Na as o,Va as i}from"./chunk-Z3ZAURKJ.js";var c=class n{static \u0275fac=function(e){return new(e||n)};static \u0275cmp=t({type:n,selectors:[["app-evaluacion"]],decls:2,vars:0,template:function(e,l){e&1&&(a(0,"h2"),i(1,"Evaluaci\xF3n Works"),o())},encapsulation:2})};export{c as EvaluacionComponent};
