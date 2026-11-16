@@ -1,0 +1,167 @@
+<section class="py-8 sm:py-12 bg-gray-50 min-h-full">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Barra Superior: Control y libertad del usuario (Heurística de Nielsen) -->
+    <nav class="mb-6 flex flex-wrap items-center justify-between gap-4" aria-label="Navegación de retorno">
+      <a
+        routerLink="/reflejos"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-card-border text-sm font-semibold text-secondary hover:text-primary hover:border-primary/50 hover:bg-blue-50/40 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+        <span aria-hidden="true" class="text-base leading-none">&larr;</span>
+        <span>Volver al menú de reflejos</span>
+      </a>
+
+      @if (categoriaActiva(); as categoria) {
+        <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
+          @if (categoriaAnterior(); as anterior) {
+            <a
+              [routerLink]="['/reflejos', anterior.id]"
+              class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-white border border-card-border text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
+              [attr.title]="'Anterior: ' + anterior.titulo">
+              &larr; #{{ anterior.numero }}
+            </a>
+          }
+          <span class="px-2.5 py-1 rounded-md bg-blue-50 text-primary font-semibold">
+            Signo {{ categoria.numero }} de 10 · {{ categoria.opciones.length }} Maniobras
+          </span>
+          @if (categoriaSiguiente(); as siguiente) {
+            <a
+              [routerLink]="['/reflejos', siguiente.id]"
+              class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-white border border-card-border text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
+              [attr.title]="'Siguiente: ' + siguiente.titulo">
+              #{{ siguiente.numero }} &rarr;
+            </a>
+          }
+        </div>
+      }
+    </nav>
+
+    @if (categoriaActiva(); as categoria) {
+      <!-- Encabezado Dinámico de la Categoría Agrupada -->
+      <header class="bg-card rounded-2xl border border-card-border shadow-sm p-6 sm:p-8 mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <span class="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[#1A56DB] text-white text-lg sm:text-xl font-extrabold shadow-sm flex-shrink-0 mt-0.5">
+              {{ categoria.numero }}
+            </span>
+
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-[#1A56DB] text-xs font-extrabold tracking-wider uppercase mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#1A56DB]"></span>
+                {{ categoria.etiquetaDominio }}
+              </div>
+
+              <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2942] tracking-tight">
+                {{ categoria.titulo }}
+              </h1>
+
+              <p class="mt-2 text-sm sm:text-base text-gray-600 max-w-3xl leading-relaxed">
+                {{ categoria.descripcion }}
+              </p>
+            </div>
+          </div>
+
+          <div class="hidden md:flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 text-[#1A56DB] flex-shrink-0">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" [attr.d]="categoria.icono" />
+            </svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- Grid de Tarjetas Responsive:
+           - 3 columnas cuando son 3 ítems (Signos cerebelosos)
+           - 2 columnas centradas cuando son 2 ítems (Desinhibición frontal, Hipocalcemia, Túnel carpal, Psicógenos)
+           - 2x2 cuando son 4 ítems (Babinski y sucedáneos) -->
+      <div
+        class="grid grid-cols-1 gap-6"
+        [ngClass]="{
+          'md:grid-cols-3': opciones().length === 3,
+          'md:grid-cols-2 max-w-4xl mx-auto': opciones().length === 2,
+          'sm:grid-cols-2': opciones().length === 4
+        }"
+        role="list"
+        [attr.aria-label]="'Maniobras de ' + categoria.titulo">
+
+        @for (opcion of opciones(); track opcion.slug) {
+          <a
+            [routerLink]="['/reflejos', categoria.id, opcion.slug]"
+            role="listitem"
+            [attr.aria-label]="opcion.numero + '. ' + opcion.titulo"
+            class="group relative bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg hover:border-[#1A56DB]/60 focus:outline-none focus:ring-2 focus:ring-[#1A56DB] focus:ring-offset-2 cursor-pointer overflow-hidden">
+
+            <!-- Acento superior en hover -->
+            <div class="absolute inset-x-0 top-0 h-1 bg-[#1A56DB] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+            <div>
+              <!-- Cabecera de tarjeta: Badge numérico + Ícono médico -->
+              <div class="flex items-center justify-between gap-4 mb-5">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#1A56DB] text-white text-sm font-extrabold shadow-sm">
+                    {{ opcion.numero }}
+                  </span>
+                  <span class="text-xs font-bold uppercase tracking-wider text-primary bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-md">
+                    Maniobra {{ opcion.codigo }}
+                  </span>
+                </div>
+
+                <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#1A56DB] group-hover:bg-[#1A56DB] group-hover:text-white group-hover:border-[#1A56DB] transition-all duration-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" [attr.d]="opcion.icono" />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Título del signo -->
+              <h2 class="text-xl sm:text-2xl font-extrabold text-[#0F2942] group-hover:text-[#1A56DB] transition-colors duration-200">
+                {{ opcion.titulo }}
+              </h2>
+
+              <!-- Subtítulo breve -->
+              <p class="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
+                {{ opcion.subtitulo }}
+              </p>
+
+              <!-- Zona anatómica de estímulo -->
+              <div class="mt-4 p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/70 group-hover:bg-blue-50/40 group-hover:border-blue-200/70 transition-colors">
+                <span class="block text-[11px] font-extrabold uppercase tracking-wider text-gray-500">
+                  Zona / Maniobra de estímulo
+                </span>
+                <p class="mt-0.5 text-xs sm:text-sm font-semibold text-[#0F2942]">
+                  {{ opcion.zonaEstimulo }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Pie de tarjeta con indicador "Ver detalle →" -->
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-xs font-medium text-gray-400 line-clamp-1">
+                {{ opcion.estadoPlaceholder }}
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-sm font-bold text-[#1A56DB] group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0">
+                <span>Ver detalle</span>
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+
+          </a>
+        }
+
+      </div>
+    } @else {
+      <!-- Contingencia si la categoría no existe -->
+      <div class="bg-card rounded-2xl border border-card-border shadow-sm p-10 text-center max-w-xl mx-auto my-8">
+        <h1 class="text-xl font-extrabold text-secondary">
+          Categoría no encontrada
+        </h1>
+        <div class="mt-6">
+          <a
+            routerLink="/reflejos"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-blue-700 transition-colors">
+            &larr; Volver al menú de reflejos
+          </a>
+        </div>
+      </div>
+    }
+
+  </div>
+</section>

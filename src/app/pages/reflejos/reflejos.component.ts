@@ -1,7 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ReflejoItem, REFLEJOS_DATA } from './reflejo.model';
+
+export type { ReflejoItem };
+export { REFLEJOS_DATA };
+
 @Component({
   selector: 'app-reflejos',
   standalone: true,
-  template: '<h2>Reflejos Works</h2>'
+  imports: [CommonModule, RouterLink],
+  templateUrl: './reflejos.component.html'
 })
-export class ReflejosComponent {}
+export class ReflejosComponent {
+  readonly reflejos = signal<ReflejoItem[]>(REFLEJOS_DATA);
+}
