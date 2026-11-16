@@ -1,0 +1,1 @@
+import{Fa as t,Sa as n,Ta as a,bb as i}from"./chunk-W72TRPRG.js";var m=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-simulador"]],decls:2,vars:0,template:function(e,r){e&1&&(n(0,"h2"),i(1,"Simulador Works"),a())},encapsulation:2})};export{m as SimuladorComponent};

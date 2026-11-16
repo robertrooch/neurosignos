@@ -1,0 +1,1 @@
+import{Fa as t,Sa as s,Ta as n,bb as r}from"./chunk-W72TRPRG.js";var c=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-recursos"]],decls:2,vars:0,template:function(e,a){e&1&&(s(0,"h2"),r(1,"Recursos Works"),n())},encapsulation:2})};export{c as RecursosComponent};
