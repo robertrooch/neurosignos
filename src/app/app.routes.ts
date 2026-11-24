@@ -51,11 +51,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/reflejos/reflejo-detalle/reflejo-detalle.component').then(m => m.ReflejoDetalleComponent)
   },
   {
-    path: 'simulador',
-    title: 'Simulador Interactivo | NEUROSIGNOS',
-    loadComponent: () => import('./pages/simulador/simulador.component').then(m => m.SimuladorComponent)
-  },
-  {
     path: 'casos-clinicos',
     title: 'Casos Clínicos | NEUROSIGNOS',
     loadComponent: () => import('./pages/casos-clinicos/casos-clinicos.component').then(m => m.CasosClinicosComponent)
@@ -64,16 +59,6 @@ export const routes: Routes = [
     path: 'evaluacion',
     title: 'Evaluación | NEUROSIGNOS',
     loadComponent: () => import('./pages/evaluacion/evaluacion.component').then(m => m.EvaluacionComponent)
-  },
-  {
-    path: 'recursos',
-    title: 'Recursos | NEUROSIGNOS',
-    loadComponent: () => import('./pages/recursos/recursos.component').then(m => m.RecursosComponent)
-  },
-  {
-    path: 'perfil',
-    title: 'Mi Perfil | NEUROSIGNOS',
-    loadComponent: () => import('./pages/perfil/perfil.component').then(m => m.PerfilComponent)
   },
   {
     path: '',
