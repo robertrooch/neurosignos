@@ -1,0 +1,162 @@
+<section class="py-8 sm:py-12 bg-gray-50 min-h-full">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+    <!-- Encabezado general de la sección de Evaluación -->
+    <header class="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-[#1A56DB] text-xs font-extrabold uppercase tracking-wider mb-2">
+            <span class="w-2 h-2 rounded-full bg-[#1A56DB]"></span>
+            Módulo de Autoevaluación Clínica
+          </span>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-[#0F2942] tracking-tight">
+            Cuestionarios de Autoevaluación
+          </h1>
+          <p class="mt-1.5 text-sm sm:text-base text-slate-600">
+            Pon a prueba tu razonamiento semiológico seleccionando un cuestionario y respondiendo las preguntas clínicas con retroalimentación inmediata.
+          </p>
+        </div>
+
+        @if (evaluacionSeleccionada().casoRelacionadoId) {
+          <a
+            routerLink="/casos-clinicos"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-[#E2E8F0] text-xs sm:text-sm font-semibold text-[#0F2942] hover:text-[#1A56DB] hover:border-[#1A56DB]/50 hover:bg-blue-50/40 shadow-sm transition-all duration-200 self-start sm:self-center flex-shrink-0">
+            <span aria-hidden="true">&larr;</span>
+            <span>Ver caso clínico relacionado</span>
+          </a>
+        }
+      </div>
+
+      <!-- Selector de cuestionarios (Píldoras) -->
+      <div class="mt-6 pt-5 border-t border-slate-100">
+        <span class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+          Cuestionarios disponibles:
+        </span>
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Selector de cuestionarios de evaluación">
+          @for (ev of evaluaciones(); track ev.id) {
+            <button
+              type="button"
+              role="tab"
+              [attr.aria-selected]="evaluacionSeleccionada().id === ev.id"
+              (click)="seleccionarEvaluacion(ev)"
+              class="px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1A56DB] focus:ring-offset-1 cursor-pointer"
+              [ngClass]="evaluacionSeleccionada().id === ev.id
+                ? 'bg-[#1A56DB] text-white border-[#1A56DB] shadow-sm'
+                : 'bg-white text-[#0F2942] border-[#E2E8F0] hover:border-[#1A56DB]/50 hover:text-[#1A56DB]'">
+              {{ ev.tema }}
+            </button>
+          }
+        </div>
+      </div>
+    </header>
+
+    @if (evaluacionSeleccionada(); as evaluacion) {
+      <!-- Barra de Progreso, Puntaje y Botón de Reinicio -->
+      <div class="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#1A56DB]">
+              {{ evaluacion.tema }}
+            </span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-[#0F2942] mt-0.5">
+              {{ evaluacion.titulo }}
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+              {{ evaluacion.subtitulo }}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <div
+              class="px-3.5 py-2 rounded-xl bg-slate-50 border border-[#E2E8F0] text-xs sm:text-sm font-semibold text-[#0F2942]"
+              aria-live="polite">
+              Progreso: <span class="text-[#1A56DB] font-extrabold">{{ totalRespondidas() }}</span> de
+              <span class="font-extrabold">{{ totalPreguntas() }}</span> respondidas &middot;
+              Aciertos: <span class="text-emerald-700 font-extrabold">{{ totalAciertos() }}</span>
+            </div>
+
+            <button
+              type="button"
+              (click)="reiniciarCuestionario()"
+              [disabled]="totalRespondidas() === 0"
+              class="px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1A56DB] focus:ring-offset-1"
+              [ngClass]="totalRespondidas() > 0
+                ? 'bg-white border-[#E2E8F0] text-[#0F2942] hover:text-[#1A56DB] hover:border-[#1A56DB]/50 hover:bg-blue-50/40 cursor-pointer'
+                : 'bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed'">
+              Reiniciar cuestionario
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra visual de progreso -->
+        <div class="mt-4 w-full h-2 rounded-full bg-slate-100 overflow-hidden" aria-hidden="true">
+          <div
+            class="h-full bg-[#1A56DB] transition-all duration-300 rounded-full"
+            [style.width.%]="porcentajeProgreso()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas de Preguntas Interactivas -->
+      <div class="space-y-4" role="list" aria-label="Preguntas del cuestionario">
+        @for (preg of evaluacion.preguntas; track preg.id) {
+          @let respuestaElegida = respuestasUsuario()[preg.id];
+
+          <article
+            role="listitem"
+            class="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-6 space-y-4">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-base sm:text-lg font-bold text-[#0F2942]">
+                {{ preg.id }}. {{ preg.pregunta }}
+              </h3>
+
+              @if (respuestaElegida) {
+                <span
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold flex-shrink-0 border"
+                  [ngClass]="respuestaElegida === preg.respuestaCorrecta
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                    : 'bg-rose-50 text-rose-800 border-rose-300'">
+                  {{ respuestaElegida === preg.respuestaCorrecta ? 'Correcto' : 'Incorrecto' }}
+                </span>
+              }
+            </div>
+
+            <!-- Opciones de respuesta -->
+            <div
+              class="space-y-2.5"
+              role="group"
+              [attr.aria-label]="'Opciones para la pregunta ' + preg.id">
+              @for (op of preg.opciones; track op.inciso) {
+                <button
+                  type="button"
+                  (click)="responder(preg.id, op.inciso)"
+                  [attr.aria-pressed]="respuestaElegida === op.inciso"
+                  class="w-full text-left p-3.5 rounded-xl border text-sm transition-all duration-150 flex items-start gap-2.5 focus:outline-none focus:ring-2 focus:ring-[#1A56DB] focus:ring-offset-1 cursor-pointer"
+                  [ngClass]="{
+                    'bg-emerald-50 border-emerald-500 text-emerald-900 font-medium': respuestaElegida && op.inciso === preg.respuestaCorrecta,
+                    'bg-rose-50 border-rose-500 text-rose-900 font-medium': respuestaElegida === op.inciso && op.inciso !== preg.respuestaCorrecta,
+                    'bg-white border-[#E2E8F0] text-slate-700 hover:border-[#1A56DB]/60 hover:bg-blue-50/30': !respuestaElegida,
+                    'bg-slate-50/60 border-[#E2E8F0] text-slate-500': respuestaElegida && op.inciso !== preg.respuestaCorrecta && respuestaElegida !== op.inciso
+                  }">
+                  <span class="font-bold uppercase">{{ op.inciso }})</span>
+                  <span>{{ op.texto }}</span>
+                </button>
+              }
+            </div>
+
+            <!-- Retroalimentación clínica -->
+            @if (respuestaElegida) {
+              <div
+                class="text-xs sm:text-sm text-slate-700 bg-slate-50 p-4 rounded-xl border border-[#E2E8F0] leading-relaxed"
+                role="status">
+                <strong class="text-[#0F2942]">Explicación:</strong> {{ preg.retroalimentacion }}
+              </div>
+            }
+          </article>
+        }
+      </div>
+    }
+
+  </div>
+</section>
+

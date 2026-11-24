@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './home.component.html',
+  templateUrl: './home.component.html'
 })
 export class HomeComponent {
   features = [
@@ -19,11 +19,6 @@ export class HomeComponent {
       title: 'Videos y animaciones',
       description: 'Visualiza la técnica correcta de exploración y la respuesta motora esperada con material audiovisual de alta calidad.',
       icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
-    },
-    {
-      title: 'Simulador interactivo',
-      description: 'Practica la percusión virtual en diferentes puntos anatómicos y observa los resultados normales y patológicos.',
-      icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9'
     },
     {
       title: 'Casos clínicos para integrar',
