@@ -1,1 +1,0 @@
-import{Fa as n,Sa as o,Ta as p,bb as a}from"./chunk-W72TRPRG.js";var i=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-not-found"]],decls:2,vars:0,template:function(e,m){e&1&&(o(0,"h2"),a(1,"404 - Not Found"),p())},encapsulation:2})};export{i as NotFoundComponent};
